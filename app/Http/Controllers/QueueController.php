@@ -33,7 +33,10 @@ class QueueController extends Controller
         }
         $totalSpentFormatted = 'Rp ' . number_format($totalSpent, 0, ',', '.');
 
-        return view('patient.dashboard', compact('queues', 'totalVisits', 'activeQueuesCount', 'totalSpentFormatted'));
+        // Fetch nearest upcoming appointment
+        $upcoming = $queues->whereIn('status', ['pending', 'calling'])->sortBy('date')->first();
+
+        return view('patient.dashboard', compact('queues', 'totalVisits', 'activeQueuesCount', 'totalSpentFormatted', 'upcoming'));
     }
 
     // Process new booking
