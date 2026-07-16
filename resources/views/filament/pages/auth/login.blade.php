@@ -174,7 +174,7 @@
             <!-- Footer Links -->
             <div class="mt-8 text-center space-y-4">
                 <p class="font-body-md text-body-md text-[#3c4a42]">
-                    Not an administrator? <a class="text-[#006c49] font-bold hover:underline" href="{{ url('/') }}">Go to Patient Portal</a>
+                    Not an administrator? <a class="text-[#006c49] font-bold hover:underline" href="{{ url('/LoginPage') }}">Go to Patient Portal</a>
                 </p>
                 <div class="flex items-center justify-center gap-6 pt-4 opacity-40">
                     <div class="flex items-center gap-1">
