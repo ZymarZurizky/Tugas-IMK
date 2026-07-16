@@ -86,7 +86,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/pasien')->with('success', 'Registrasi berhasil dan Anda telah otomatis masuk.');
+        return redirect('/Pasien/Dashboard')->with('success', 'Registrasi berhasil dan Anda telah otomatis masuk.');
     }
 
     // Logout
@@ -104,6 +104,6 @@ class AuthController extends Controller
         if ($user->role === 'admin' || $user->role === 'doctor') {
             return redirect('/admin');
         }
-        return redirect('/pasien');
+        return redirect('/Pasien/Dashboard');
     }
 }

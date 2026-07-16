@@ -123,7 +123,7 @@
                 <a class="{{ Request::is('staff') ? 'text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1' : 'text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors' }} font-label-md text-label-md" href="{{ url('/staff') }}">Staf Medis</a>
                 <a class="{{ Request::is('contact') ? 'text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1' : 'text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors' }} font-label-md text-label-md" href="{{ url('/contact') }}">Kontak</a>
                 @auth
-                    <a class="{{ Request::is('pasien') ? 'text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1' : 'text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors' }} font-label-md text-label-md" href="{{ url('/pasien') }}">Dashboard</a>
+                    <a class="{{ Request::is('Pasien/Dashboard') ? 'text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1' : 'text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors' }} font-label-md text-label-md" href="{{ url('/Pasien/Dashboard') }}">Dashboard</a>
                 @endauth
             </div>
             

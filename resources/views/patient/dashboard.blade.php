@@ -127,7 +127,7 @@
             <h1 class="text-headline-md font-headline-md font-extrabold text-primary">Puskesmas Sejahtera</h1>
         </div>
         <nav class="flex-1 space-y-2">
-            <a class="flex items-center gap-3 px-4 py-3 rounded-xl active-nav transition-all duration-200" href="{{ url('/pasien') }}">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl active-nav transition-all duration-200" href="{{ url('/Pasien/Dashboard') }}">
                 <span class="material-symbols-outlined">dashboard</span>
                 <span class="font-label-md text-label-md">Overview</span>
             </a>
@@ -400,7 +400,7 @@
 
     <!-- Mobile Navigation Bottom Bar -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center h-16 z-50">
-        <a class="flex flex-col items-center text-primary" href="{{ url('/pasien') }}">
+        <a class="flex flex-col items-center text-primary" href="{{ url('/Pasien/Dashboard') }}">
             <span class="material-symbols-outlined">dashboard</span>
             <span class="text-[10px] font-bold">Beranda</span>
         </a>

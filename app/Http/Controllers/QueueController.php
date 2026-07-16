@@ -92,7 +92,7 @@ class QueueController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect('/pasien')->with('success', 'Antrean berhasil didaftarkan! Tiket Anda adalah ' . $queueNumber);
+        return redirect('/Pasien/Dashboard')->with('success', 'Antrean berhasil didaftarkan! Tiket Anda adalah ' . $queueNumber);
     }
 
     // Show check-in terminal
