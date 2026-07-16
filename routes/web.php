@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         return redirect('/');
     });
     Route::get('/Pasien/Dashboard', [QueueController::class, 'patientDashboard'])->name('patient.dashboard');
+    Route::get('/Pasien/TransactionHistory', [QueueController::class, 'transactionHistory'])->name('patient.transactions');
     Route::post('/queues/book', [QueueController::class, 'book'])->name('queues.book');
 });
 

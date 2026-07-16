@@ -131,6 +131,10 @@
                 <span class="material-symbols-outlined">dashboard</span>
                 <span class="font-label-md text-label-md">Overview</span>
             </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-secondary hover:bg-surface-container transition-all duration-200" href="{{ url('/Pasien/TransactionHistory') }}">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-label-md">Riwayat Transaksi</span>
+            </a>
             <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-secondary hover:bg-surface-container transition-all duration-200" href="{{ url('/#booking-section') }}">
                 <span class="material-symbols-outlined">calendar_today</span>
                 <span class="font-label-md text-label-md">Janji Temu</span>
@@ -404,9 +408,9 @@
             <span class="material-symbols-outlined">dashboard</span>
             <span class="text-[10px] font-bold">Beranda</span>
         </a>
-        <a class="flex flex-col items-center text-secondary" href="{{ url('/#booking-section') }}">
-            <span class="material-symbols-outlined">calendar_today</span>
-            <span class="text-[10px]">Janji Temu</span>
+        <a class="flex flex-col items-center text-secondary" href="{{ url('/Pasien/TransactionHistory') }}">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span class="text-[10px]">Transaksi</span>
         </a>
         <a href="{{ url('/#booking-section') }}" class="flex flex-col items-center justify-center -mt-8 bg-primary w-14 h-14 rounded-full text-white shadow-lg border-4 border-background">
             <span class="material-symbols-outlined">add</span>

@@ -171,4 +171,59 @@ class QueueController extends Controller
             'history' => $history
         ]);
     }
+
+    // Patient transaction history page
+    public function transactionHistory()
+    {
+        $user = Auth::user();
+        if ($user->role !== 'patient') {
+            return redirect('/admin');
+        }
+
+        // Fetch all queues for the user by NIK
+        $queues = Queue::where('patient_nik', $user->nik)
+            ->orderBy('date', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        // Calculate statistics
+        $totalExpenditure = 0;
+        $pendingBalance = 0;
+        $pharmacyTotal = 0;
+        $consultationTotal = 0;
+
+        foreach ($queues as $q) {
+            $cost = $q->patient_type === 'BPJS' ? 0 : 50000;
+            
+            // If completed, add to expenditure
+            if ($q->status === 'completed') {
+                $totalExpenditure += $cost;
+                $consultationTotal += $cost;
+                
+                // Check for prescriptions
+                $prescription = \App\Models\Prescription::where('queue_id', $q->id)->first();
+                if ($prescription && $prescription->status === 'completed' && is_array($prescription->medicines_data)) {
+                    foreach ($prescription->medicines_data as $item) {
+                        $med = \App\Models\Medicine::find($item['medicine_id']);
+                        $medPrice = $med ? $med->price : 5000;
+                        $medCost = $medPrice * $item['quantity'];
+                        $totalExpenditure += $medCost;
+                        $pharmacyTotal += $medCost;
+                    }
+                }
+            } elseif ($q->status === 'pending' || $q->status === 'calling') {
+                if ($q->patient_type === 'Mandiri') {
+                    $pendingBalance += $cost;
+                }
+            }
+        }
+
+        return view('patient.transaction_history', compact(
+            'queues',
+            'totalExpenditure',
+            'pendingBalance',
+            'pharmacyTotal',
+            'consultationTotal'
+        ));
+    }
 }
