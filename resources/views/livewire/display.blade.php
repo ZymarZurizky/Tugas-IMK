@@ -152,7 +152,7 @@
     <div id="active-ticket-data" 
          data-ticket-id="{{ $latestCalling ? $latestCalling->id : '' }}" 
          data-ticket-number="{{ $latestCalling ? $latestCalling->queue_number : '' }}"
-         data-ticket-destination="{{ $latestCalling ? 'Loket ' . ($latestCalling->poliklinik === 'Poli Umum' ? '2' : ($latestCalling->poliklinik === 'Poli Gigi' ? '3' : ($latestCalling->poliklinik === 'Poli KIA' ? '4' : '5'))) . ', ' . $latestCalling->poliklinik : '' }}">
+         data-ticket-loket="{{ $latestCalling ? ($latestCalling->poliklinik === 'Poli Umum' ? '2' : ($latestCalling->poliklinik === 'Poli Gigi' ? '3' : ($latestCalling->poliklinik === 'Poli KIA' ? '4' : '5'))) : '' }}">
     </div>
 
     <!-- Script Layer -->
@@ -182,7 +182,7 @@
             }
         }
 
-        // Voice call logic (Web Speech API speechSynthesis)
+        // Voice call logic (Google Translate TTS with Web Speech API fallback)
         let lastPlayedId = localStorage.getItem('last_played_ticket_id') || '';
 
         function checkAndPlayCall() {
@@ -191,43 +191,50 @@
 
             const ticketId = dataEl.getAttribute('data-ticket-id');
             const ticketNumber = dataEl.getAttribute('data-ticket-number');
-            const destination = dataEl.getAttribute('data-ticket-destination');
+            const loket = dataEl.getAttribute('data-ticket-loket');
 
             if (ticketId && ticketId !== lastPlayedId) {
                 lastPlayedId = ticketId;
                 localStorage.setItem('last_played_ticket_id', ticketId);
-                speakCall(ticketNumber, destination);
+                triggerVoiceCall(ticketNumber, loket);
             }
         }
 
-        function speakCall(ticketNumber, destination) {
-            if ('speechSynthesis' in window) {
-                // Cancel previous speech calls
-                window.speechSynthesis.cancel();
+        function triggerVoiceCall(ticketNumber, loket) {
+            let formattedTicket = ticketNumber.replace('-', ' ');
+            formattedTicket = formattedTicket.replace(/0/g, 'kosong ');
 
-                // Format queue number to spell letters/numbers clearly
-                // e.g. B-05 -> B, kosong, lima
-                let cleanNumber = ticketNumber.replace('-', ' ');
-                cleanNumber = cleanNumber.replace(/0/g, 'kosong ');
+            speakAntrean(`Nomor antrean ${formattedTicket}, silakan menuju ke loket ${loket}`);
+        }
 
-                const speechText = `Nomor antrean, ${cleanNumber}, silakan menuju ${destination}`;
-                const utterance = new SpeechSynthesisUtterance(speechText);
-                utterance.lang = 'id-ID';
-                utterance.rate = 0.85; // Slightly slower for clarity
-                utterance.pitch = 1.0;
+        function speakAntrean(text) {
+            const audio = new Audio(
+                `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=id&client=tw-ob`
+            );
 
-                // Select Indonesian voice if available
-                const voices = window.speechSynthesis.getVoices();
-                const idVoice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
-                if (idVoice) utterance.voice = idVoice;
+            audio.play().catch(() => {
+                // fallback ke Web Speech API kalau endpoint gagal/diblokir
+                fallbackSpeak(text);
+            });
+        }
 
-                window.speechSynthesis.speak(utterance);
-            }
+        function fallbackSpeak(text) {
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'id-ID';
+            utter.rate = 0.9;   // sedikit lebih lambat, kesan lebih natural
+            utter.pitch = 1;
+
+            // pilih voice ID yang paling bagus kalau tersedia
+            const voices = speechSynthesis.getVoices();
+            const idVoice = voices.find(v => v.lang === 'id-ID') || voices.find(v => v.lang.startsWith('id'));
+            if (idVoice) utter.voice = idVoice;
+
+            speechSynthesis.speak(utter);
         }
 
         // Clickable speaker icon to test sound
         function testVoice() {
-            speakCall('TES-99', 'Loket Pengujian Suara');
+            triggerVoiceCall('TES-99', 'Uji Coba');
         }
 
         // Run check periodically
