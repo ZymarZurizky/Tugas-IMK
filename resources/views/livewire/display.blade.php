@@ -150,7 +150,7 @@
 
     <!-- Hidden audio voice data node for tracking changes -->
     <div id="active-ticket-data" 
-         data-ticket-id="{{ $latestCalling ? $latestCalling->id : '' }}" 
+         data-ticket-id="{{ $latestCalling ? $latestCalling->id . '-' . ($latestCalling->called_at ? \Carbon\Carbon::parse($latestCalling->called_at)->timestamp : '') : '' }}" 
          data-ticket-number="{{ $latestCalling ? $latestCalling->queue_number : '' }}"
          data-ticket-loket="{{ $latestCalling ? ($latestCalling->poliklinik === 'Poli Umum' ? '2' : ($latestCalling->poliklinik === 'Poli Gigi' ? '3' : ($latestCalling->poliklinik === 'Poli KIA' ? '4' : '5'))) : '' }}">
     </div>
