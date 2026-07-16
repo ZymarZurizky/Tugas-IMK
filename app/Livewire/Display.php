@@ -17,43 +17,22 @@ class Display extends Component
             ->orderBy('called_at', 'desc')
             ->first();
 
-        // Get active calling for BPJS
-        $callingBPJS = Queue::where('date', $today)
-            ->where('patient_type', 'BPJS')
-            ->where('status', 'calling')
-            ->orderBy('called_at', 'desc')
-            ->first();
-
-        // Get active calling for Mandiri
-        $callingMandiri = Queue::where('date', $today)
-            ->where('patient_type', 'Mandiri')
-            ->where('status', 'calling')
-            ->orderBy('called_at', 'desc')
-            ->first();
-
-        // BPJS pending list (limit 5)
-        $pendingBPJS = Queue::where('date', $today)
-            ->where('patient_type', 'BPJS')
+        // Unified pending list for waiting pool (limit 5)
+        $pendingQueues = Queue::where('date', $today)
             ->where('status', 'pending')
             ->orderBy('id', 'asc')
             ->limit(5)
             ->get();
 
-        // Mandiri pending list (limit 5)
-        $pendingMandiri = Queue::where('date', $today)
-            ->where('patient_type', 'Mandiri')
+        // Total pending queues today
+        $totalPending = Queue::where('date', $today)
             ->where('status', 'pending')
-            ->orderBy('id', 'asc')
-            ->limit(5)
-            ->get();
+            ->count();
 
         return view('livewire.display', [
             'latestCalling' => $latestCalling,
-            'callingBPJS' => $callingBPJS,
-            'callingMandiri' => $callingMandiri,
-            'pendingBPJS' => $pendingBPJS,
-            'pendingMandiri' => $pendingMandiri,
-        ])->layout('layouts.app');
+            'pendingQueues' => $pendingQueues,
+            'totalPending' => $totalPending,
+        ])->layout('layouts.empty');
     }
 }
-
