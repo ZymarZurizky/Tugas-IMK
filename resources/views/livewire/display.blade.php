@@ -60,11 +60,14 @@
 
                 <div class="flex-grow flex flex-col items-center justify-center p-8 z-10">
                     @if($latestCalling)
-                        <div class="relative mb-8">
+                        <div class="relative mb-12">
                             <!-- Calling Animation Speaker Icon -->
                             <div class="relative z-20 bg-primary-container text-on-primary-container w-32 h-32 rounded-full flex items-center justify-center shadow-lg">
                                 <span class="material-symbols-outlined text-[64px] animate-bounce">volume_up</span>
                             </div>
+                            <div class="pulse-effect"></div>
+                            <div class="pulse-effect" style="animation-delay: 0.5s"></div>
+                            <div class="pulse-effect" style="animation-delay: 1s"></div>
                         </div>
                         <div class="text-center">
                             <span class="text-[160px] leading-none font-extrabold tracking-tighter text-on-surface block mb-4">{{ $latestCalling->queue_number }}</span>

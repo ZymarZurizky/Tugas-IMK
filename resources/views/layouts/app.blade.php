@@ -27,7 +27,7 @@
                 <a href="{{ url('/services') }}" class="nav-link {{ Request::is('services') ? 'active' : '' }}">Layanan</a>
                 <a href="{{ url('/staff') }}" class="nav-link {{ Request::is('staff') ? 'active' : '' }}">Tentang Staf</a>
                 <a href="{{ url('/contact') }}" class="nav-link {{ Request::is('contact') ? 'active' : '' }}">Kontak</a>
-                <a href="{{ url('/display') }}" class="nav-link {{ Request::is('display') ? 'active' : '' }}">Layar Monitor</a>
+                <a href="{{ url('/antrean') }}" class="nav-link {{ Request::is('antrean') ? 'active' : '' }}">Layar Monitor</a>
                 <a href="{{ url('/checkin') }}" class="nav-link {{ Request::is('checkin') ? 'active' : '' }}">Mesin Check-in</a>
                 
                 @auth

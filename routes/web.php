@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('home', compact('myTickets'));
 });
 
-Route::get('/display', \App\Livewire\Display::class); // Livewire component for lobby monitor
+Route::get('/antrean', \App\Livewire\Display::class); // Livewire component for lobby monitor
 
 Route::get('/services', function () {
     return view('services');
