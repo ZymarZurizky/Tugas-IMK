@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/antrean', \App\Livewire\Display::class); // Livewire component for lobby monitor
+Route::get('/download-ticket/{id}', [QueueController::class, 'downloadTicket'])->name('queues.download-ticket');
 
 Route::get('/services', function () {
     return view('services');

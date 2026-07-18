@@ -229,4 +229,16 @@ class QueueController extends Controller
             'consultationTotal'
         ));
     }
+
+    // Public ticket download
+    public function downloadTicket($id)
+    {
+        $queue = Queue::findOrFail($id);
+
+        $html = view('patient.ticket_download', compact('queue'))->render();
+
+        return response($html)
+            ->header('Content-Type', 'text/html')
+            ->header('Content-Disposition', 'attachment; filename="E-Tiket-Puskesmas-' . $queue->queue_number . '.html"');
+    }
 }
